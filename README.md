@@ -13,7 +13,7 @@
 ## 使用步骤
 
 ```bash
-git clone https://github.com/JIEHNE/remote-claude.git   # 下载项目
+git clone https://github.com/JIEHNE/remote-panel.git   # 下载项目
 cd remote-claude                                        # 进入项目文件夹
 npm install                                             # 安装依赖
 node server.js                                          # 启动服务

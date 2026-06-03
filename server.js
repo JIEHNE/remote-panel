@@ -210,7 +210,7 @@ wss.on('connection', (ws, req) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`\n远程 Claude Code 服务已启动:`);
+  console.log(`\n远程面板服务已启动:`);
   console.log(`  本地地址: http://localhost:${PORT}`);
   console.log(`  同 WiFi 手机访问: http://<你的电脑IP>:${PORT}\n`);
 });
