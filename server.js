@@ -169,12 +169,12 @@ function spawnClaude() {
     ptyProcess = null;
   });
 
-  // 启动 Claude Code
+  // 等 cmd.exe 初始化完成后再启动 Claude Code
   setTimeout(() => {
     if (ptyProcess) {
       ptyProcess.write('claude --resume\r');
     }
-  }, 500);
+  }, 1500);
 }
 
 wss.on('connection', (ws, req) => {
