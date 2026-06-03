@@ -140,7 +140,7 @@ function spawnClaude() {
     try { ptyProcess.kill(); } catch (e) { /* 忽略 */ }
   }
 
-  const cwd = 'G:/cc';
+  const cwd = process.cwd();
   ptyProcess = pty.spawn('cmd.exe', [], {
     name: 'xterm-color',
     cols: 100,
