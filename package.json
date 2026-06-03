@@ -1,0 +1,14 @@
+{
+  "name": "remote-claude",
+  "version": "1.0.0",
+  "private": true,
+  "description": "远程操控 Claude Code 的 Web 服务",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "node-pty": "^1.0.0",
+    "ws": "^8.18.0"
+  }
+}
