@@ -90,6 +90,12 @@ body {
   cursor: pointer; white-space: nowrap;
 }
 #send-btn:active { opacity: 0.8; }
+#ctrl-c-btn {
+  padding: 10px 12px; background: rgba(248,81,73,0.2); color: var(--danger);
+  border: 1px solid rgba(248,81,73,0.3); border-radius: 6px;
+  font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+}
+#ctrl-c-btn:active { opacity: 0.7; }
 </style>
 </head>
 <body>
@@ -115,10 +121,11 @@ body {
     </div>
   </div>
   <div id="term-wrap"></div>
-  <form id="input-bar" onsubmit="sendCmd(); return false;">
+  <div id="input-bar">
     <input type="text" id="msg-input" placeholder="输入消息..." autocomplete="off">
-    <button id="send-btn" type="submit">发送</button>
-  </form>
+    <button id="send-btn" onclick="sendCmd()">发送</button>
+    <button id="ctrl-c-btn" onclick="sendCtrlC()" title="Ctrl+C">C-c</button>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
@@ -195,10 +202,19 @@ function init() {
 function sendCmd() {
   const inp = document.getElementById('msg-input');
   const t = inp.value;
-  if (!t || !ws || ws.readyState !== 1) return false;
+  if (!t || !ws || ws.readyState !== 1) return;
   ws.send(JSON.stringify({ type: 'input', data: t + '\r' }));
   inp.value = '';
-  return false;
+}
+
+document.getElementById('msg-input').addEventListener('keydown', ev => {
+  if (ev.key === 'Enter') sendCmd();
+});
+
+function sendCtrlC() {
+  if (ws && ws.readyState === 1) {
+    ws.send(JSON.stringify({ type: 'input', data: '\x03' }));
+  }
 }
 
 // ====== WebSocket ======
