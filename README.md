@@ -12,25 +12,43 @@
 
 ## 使用步骤
 
+打开终端（Windows 按 `Win+R` 输入 `cmd` 回车），依次执行：
+
 ```bash
-# 1. 克隆项目
-git clone https://github.com/JIEHNE/remote-claude.git
-cd remote-claude
-
-# 2. 安装依赖
-npm install
-
-# 3. 启动服务
-node server.js
+git clone https://github.com/JIEHNE/remote-claude.git   # 下载项目
+cd remote-claude                                        # 进入项目文件夹
+npm install                                             # 自动下载依赖包
+node server.js                                          # 启动服务器
 ```
 
-控制台会输出一个随机密码，记下来。
+执行最后一条后，控制台会打印一个随机密码，记下来。这个窗口不要关。
 
 ## 打开使用
 
-- **电脑**：浏览器打开 `http://localhost:3000`，输入密码
+- **电脑**：浏览器打开 `http://localhost:3000`，输入刚才的密码
 - **手机（同一 WiFi）**：浏览器打开 `http://你电脑的IP:3000`
-- **手机（外面流量）**：另开一个终端运行 `cloudflared tunnel --url http://localhost:3000`，会得到一个 `https://xxxx.trycloudflare.com` 地址，手机浏览器打开即可
+- **手机（外面流量）**：另开一个终端窗口，运行：
+  ```
+  cloudflared tunnel --url http://localhost:3000
+  ```
+  运行后会显示一个 `https://xxxx.trycloudflare.com` 地址，手机浏览器打开这个地址
+
+## 重启电脑后
+
+打开两个终端窗口，分别运行：
+
+**窗口 1：**
+```
+cd G:/cc/remote-claude
+node server.js
+```
+
+**窗口 2（外网访问才需要）：**
+```
+cloudflared tunnel --url http://localhost:3000
+```
+
+窗口 2 输出的是新地址（每次重启都会变），手机用新地址访问。密码不变。
 
 ## 多设备同步
 
