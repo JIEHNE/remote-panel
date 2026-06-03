@@ -115,10 +115,10 @@ body {
     </div>
   </div>
   <div id="term-wrap"></div>
-  <div id="input-bar">
+  <form id="input-bar" onsubmit="sendCmd(); return false;">
     <input type="text" id="msg-input" placeholder="输入消息..." autocomplete="off">
-    <button id="send-btn" onclick="sendCmd()">发送</button>
-  </div>
+    <button id="send-btn" type="submit">发送</button>
+  </form>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
@@ -153,6 +153,7 @@ async function login() {
     document.getElementById('main-screen').style.display = 'flex';
     init();
     connect(d.token);
+    document.getElementById('msg-input').focus();
   } catch (x) {
     e.textContent = '网络错误，请检查服务是否启动';
     b.disabled = false; b.textContent = '连接';
@@ -194,13 +195,11 @@ function init() {
 function sendCmd() {
   const inp = document.getElementById('msg-input');
   const t = inp.value;
-  if (!t || !ws || ws.readyState !== 1) return;
+  if (!t || !ws || ws.readyState !== 1) return false;
   ws.send(JSON.stringify({ type: 'input', data: t + '\r' }));
   inp.value = '';
+  return false;
 }
-document.getElementById('msg-input').addEventListener('keydown', ev => {
-  if (ev.key === 'Enter') sendCmd();
-});
 
 // ====== WebSocket ======
 function connect(token) {
